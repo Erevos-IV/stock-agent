@@ -1,88 +1,55 @@
-# ⚠️ WARNING: NOT FINANCIAL ADVICE
+# 🧠 AI-Powered Long-Term Investment Agent
 
-**This software is for educational and informational purposes only.**
+A sophisticated Python agent designed for **Long-Term Investors**. It moves beyond simple price trends and looks at **Fundamental Quality** (Margins, Debt) and uses **Google Gemini AI** to interpret the news for you.
 
-* **Do not** use this tool as the sole basis for any investment decisions.
-* **Do not** risk money you cannot afford to lose.
-* The data provided (Yahoo Finance, Google News) may be delayed, inaccurate, or incomplete.
-* The "Buy/Sell" signals generated are purely mathematical outputs based on historical data and simple algorithms. They do not account for real-world complexity, market manipulation, or black swan events.
-* **Always** consult with a qualified financial advisor or do your own due diligence before trading.
+## ✨ New Features
 
----
+  * **🤖 Integrated AI Analyst**: Uses Google's Gemini Pro to read news headlines, summarize the *fundamental impact*, and assign a specific **Sentiment Score (0-100)**.
+  * **💎 Quality First**: Prioritizes **Profit Margins** and **Low Debt** over short-term hype.
+  * **📉 SMA 200 Trend**: Uses the **200-Day Moving Average** to determine the long-term market cycle (Bull vs Bear).
+  * **🛡️ Smart Valuation**: Uses PEG Ratio as the primary metric, but intelligently falls back to **Forward P/E** if PEG data is missing (N/A).
 
-# Pro Stock Analysis Agent
+## 🔑 Setup (AI Key Required)
 
-An advanced Python-based financial agent that combines **Sentiment Analysis** (Google News), **Fundamental Valuation**, and **Technical Analysis** to generate actionable "Buy/Sell/Hold" signals with a confidence score.
-
-## 🚀 Features
-
-* **Sentiment Engine**: Fetches real-time news from Google News RSS and uses `NLTK VADER` to score headlines (Positive/Negative/Neutral).
-* **Valuation Engine**: Analyzes PEG Ratio, Trailing P/E, and Forward P/E to determine if a stock is cheap or expensive relative to its growth.
-* **Technical Analysis**:
-    * **RSI (Relative Strength Index)**: Detects Overbought (>70) and Oversold (<30) conditions.
-    * **SMA (Simple Moving Average)**: Checks if the stock is in an uptrend (Price > 50-Day SMA).
-* **Pro Scoring System**: Generates a 0-100 Confidence Score based on 5 weighted factors.
-* **Dual Strategy Modes**:
-    * `trend`: Best for Bear Markets (Sells downtrends).
-    * `reversion`: Best for Bull Markets (Buys dips).
-
-## 📦 Installation
-
-1.  **Clone the repository** (or download the files).
-2.  **Install dependencies**:
+1.  **Get a Free API Key**: Go to [Google AI Studio](https://aistudio.google.com/app/apikey) and create a key.
+2.  **Edit Code**: Open `stock_agent.py` and paste your key:
+    ```python
+    GOOGLE_API_KEY = "AIzaSy......"
+    ```
+3.  **Install Requirements**:
     ```bash
     pip install -r requirements.txt
     ```
-
-## 🛠 Usage
-
-1.  Open `stock_agent.py` and edit the `my_watchlist` list with your favorite tickers:
-    ```python
-    my_watchlist = ["AAPL", "TSLA", "NVDA", "MSFT"]
-    ```
-2.  Run the agent:
+4.  **Run**:
     ```bash
     python stock_agent.py
     ```
-3.  **View Results**:
-    * A summary table will appear in your terminal.
-    * A detailed CSV report (e.g., `Pro_Stock_Report_2025-11-22.csv`) will be saved in the same folder.
 
-## 🧠 How It Works (The Logic)
+## 🧠 How The Analysis Works (The Logic)
 
-### 1. The Confidence Score (0-100)
-The agent starts with a neutral score of **50** and adds/subtracts points based on evidence:
+The agent calculates a **Confidence Score (0-100)**. A score of 50 is neutral. Points are added or subtracted based on the following "Long-Term" criteria:
 
-| Factor | Condition | Points | Reasoning |
+| Category | Condition | Points | Reasoning |
 | :--- | :--- | :--- | :--- |
-| **Valuation** | PEG < 1.0 (Undervalued) | **+20** | Growth is cheap. |
-| | PEG > 2.0 (Overvalued) | **-20** | Price is too high for growth. |
-| **Technicals** | RSI < 30 (Oversold) | **+15** | Potential bounce/reversal. |
-| | Price > 50 SMA | **+10** | Stock is in a healthy uptrend. |
-| **Sentiment** | Positive News Sentiment | **+10** | Good PR/Earnings buzz. |
-| **Analyst** | Upside > 20% | **+15** | Wall St. expects price to rise. |
-| **Volume** | Vol > 1.2x Average | **+5** | High conviction move. |
-
-### 2. Strategy Modes
-You can toggle `STRATEGY_MODE` at the top of `stock_agent.py`.
-
-* **`"trend"` (Default)**:
-    * **Logic:** "Don't catch a falling knife."
-    * **Behavior:** Punishes stocks trading *below* their 50-Day Moving Average (-25 points).
-    * **Best For:** Bear Markets, Corrections, Volatile periods.
-* **`"reversion"`**:
-    * **Logic:** "Buy low, sell high."
-    * **Behavior:** Rewards stocks with low RSI (Oversold) even if they are downtrending.
-    * **Best For:** Bull Markets, Blue-chip accumulation.
+| **Quality (The Moat)** | Profit Margins > 20% | **+15** | High efficiency and competitive advantage. |
+| | Profit Margins < 5% | **-15** | Low profitability risk. |
+| **Financial Health** | Debt-to-Equity < 50% | **+10** | Very healthy balance sheet. |
+| | Debt-to-Equity > 150% | **-15** | High leverage risk. |
+| **Valuation** | PEG Ratio < 1.2 | **+20** | Growth is cheap (Value). |
+| | PEG Ratio > 2.5 | **-15** | Price is too high for growth. |
+| | *Fallback* (If PEG N/A) | **+10** | Forward P/E < 20 (Reasonable Price). |
+| **Trend (Timing)** | Price > 200-Day SMA | **+10** | Stock is in a long-term Bull Market. |
+| | RSI < 30 (Oversold) | **+10** | Deep value dip opportunity. |
+| **AI Sentiment** | AI Score > 70 | **+Var** | AI detects strong fundamental news. |
+| **Analyst** | Upside > 20% | **+10** | Wall St. expects price to rise. |
 
 ## 📊 Interpreting the Report
 
-* **Signal**: The final recommendation (STRONG BUY, BUY, HOLD, SELL).
-* **Score**: The strength of the signal (0-100). 80+ is very strong.
-* **RSI**: Momentum indicator.
-    * **< 30**: Oversold (Panic selling).
-    * **> 70**: Overbought (Euphoria).
-* **Vol Ratio**: Current Volume vs. 10-Day Average.
-    * **> 1.0**: Higher than normal volume (Institutional activity).
-    * **< 0.8**: Weak interest.
-* **Analyst Upside**: How much higher Wall Street analysts think the stock will go.
+  * **Signal**: The final recommendation (STRONG BUY, BUY, HOLD, SELL).
+  * **Score**: The strength of the signal (0-100). **>80** is a high-conviction Buy.
+  * **AI Outlook**: A smart summary generated by Gemini explaining *why* the stock is moving.
+  * **Key Factors**: The specific reasons the stock gained or lost points (e.g., "High Margins, Undervalued").
+
+## ⚠️ Disclaimer
+
+**Not financial advice.** The AI predictions are based on language models and may hallucinate. The calculations are purely mathematical based on historical data. Always do your own due diligence before trading.
