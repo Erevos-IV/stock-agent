@@ -1,7 +1,3 @@
-Here is the full text for your README.md file. You can copy and paste this directly.
-
-Markdown
-
 # ⚠️ WARNING: NOT FINANCIAL ADVICE
 
 **This software is for educational and informational purposes only.**
